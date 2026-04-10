@@ -20,5 +20,5 @@
 .DS_Store
 Thumbs.db
 
-# Claude Code internal state (memory, session files)
-.claude/projects/
+# Claude Code internal state (memory, session files, local permissions)
+.claude/
