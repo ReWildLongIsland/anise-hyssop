@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+:root {
+  --color-rewild-green: #2D5A27;
+  --color-rewild-green-light: #3d7a35;
+  --color-stone-50: #fafaf9;
+  --color-earth-sand: #F4A460;
+}

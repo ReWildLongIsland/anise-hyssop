@@ -1,0 +1,24 @@
+# Secrets — never commit these
+**/.env
+**/credentials/*.json
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+**/venv/
+**/.venv/
+**/*.egg-info/
+
+# Node
+**/node_modules/
+
+# Build output
+**/dist/
+**/build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code internal state (memory, session files)
+.claude/projects/
