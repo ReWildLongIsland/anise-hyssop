@@ -12,12 +12,13 @@ VOLUNTEERS_HEADERS = [
     "Town",
     "ZipCode",
     "DateOfBirth",
-    "Status",
-    "GlobalRole",
-    "WaiverSignedDate",
     "isAdult",
     "School",
     "Grade",
+    "Status",
+    "GlobalRole",
+    "WaiverSignedDate",
+    "WaiverFileURL",   # Google Drive link for uploaded Youth waiver documents
 ]
 
 
@@ -29,13 +30,14 @@ class Volunteer(BaseModel):
     last_name: str
     town: str
     zip_code: str
-    date_of_birth: Optional[str] = None   # YYYY-MM-DD; only stored for Youth
-    status: str                            # Pending | Active | Inactive | Deleted
-    global_role: str                       # Volunteer | Coordinator | Admin
-    waiver_signed_date: Optional[str] = None
+    date_of_birth: Optional[str] = None   # YYYY-MM-DD; required for Youth, optional for Adults
     is_adult: bool
-    school: Optional[str] = None
-    grade: Optional[str] = None
+    school: Optional[str] = None          # Required for Youth
+    grade: Optional[str] = None           # Required for Youth
+    status: str                            # Pending | Active | Inactive
+    global_role: str                       # Volunteer | Admin
+    waiver_signed_date: Optional[str] = None
+    waiver_file_url: Optional[str] = None  # Google Drive URL; Youth waivers only
 
     @classmethod
     def from_sheet_row(cls, row: dict) -> "Volunteer":
@@ -47,12 +49,13 @@ class Volunteer(BaseModel):
             town=row["Town"],
             zip_code=row["ZipCode"],
             date_of_birth=row.get("DateOfBirth") or None,
-            status=row.get("Status", "Pending"),
-            global_role=row.get("GlobalRole", "Volunteer"),
-            waiver_signed_date=row.get("WaiverSignedDate") or None,
             is_adult=str(row.get("isAdult", "True")).lower() in ("true", "1", "yes"),
             school=row.get("School") or None,
             grade=row.get("Grade") or None,
+            status=row.get("Status", "Pending"),
+            global_role=row.get("GlobalRole", "Volunteer"),
+            waiver_signed_date=row.get("WaiverSignedDate") or None,
+            waiver_file_url=row.get("WaiverFileURL") or None,
         )
 
     def to_sheet_row(self) -> dict:
@@ -64,12 +67,13 @@ class Volunteer(BaseModel):
             "Town": self.town,
             "ZipCode": self.zip_code,
             "DateOfBirth": self.date_of_birth or "",
-            "Status": self.status,
-            "GlobalRole": self.global_role,
-            "WaiverSignedDate": self.waiver_signed_date or "",
             "isAdult": str(self.is_adult),
             "School": self.school or "",
             "Grade": self.grade or "",
+            "Status": self.status,
+            "GlobalRole": self.global_role,
+            "WaiverSignedDate": self.waiver_signed_date or "",
+            "WaiverFileURL": self.waiver_file_url or "",
         }
 
 

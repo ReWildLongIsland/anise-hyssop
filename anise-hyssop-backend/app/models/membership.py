@@ -23,7 +23,8 @@ PROMOTABLE_ROLES = {
     "Chapter": ["Lead"],
     "Committee": ["Member", "Lead"],
     "Program": [
-        "Student Volunteer",
+        "Adult Volunteer",
+        "Youth Volunteer",
         "Student Intern",
         "Student Organizer",
         "Adult Organizer",
