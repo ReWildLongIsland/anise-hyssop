@@ -58,7 +58,8 @@ async def verify_token(
     # Identify the signing key by key ID (kid)
     try:
         unverified_header = jwt.get_unverified_header(token)
-    except JWTError:
+    except JWTError as exc:
+        logger.error("Invalid token header: %s", exc)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token header",
@@ -77,6 +78,9 @@ async def verify_token(
             break
 
     if not rsa_key:
+        logger.error("No matching key for kid=%s, available kids=%s",
+                      unverified_header.get("kid"),
+                      [k.get("kid") for k in jwks.get("keys", [])])
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="No matching signing key found",
@@ -91,6 +95,7 @@ async def verify_token(
             issuer=f"https://{settings.AUTH0_DOMAIN}/",
         )
     except JWTError as exc:
+        logger.error("JWT decode failed: %s", exc)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Token validation failed: {exc}",

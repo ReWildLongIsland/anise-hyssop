@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
+// Auth0 logout is handled via useAuth context
 import { Leaf, LogOut } from "lucide-react";
 
 export default function Navigation({ children }: { children: React.ReactNode }) {
@@ -10,10 +11,9 @@ export default function Navigation({ children }: { children: React.ReactNode }) 
 
   const handleLogout = () => {
     logout();
-    navigate("/");
   };
 
-  const isAdmin = user?.globalRole === "Admin";
+  const isAdmin = user?.GlobalRole === "Admin";
 
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col">

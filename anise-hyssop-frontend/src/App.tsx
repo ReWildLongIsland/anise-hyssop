@@ -7,36 +7,31 @@ import Portal from "./pages/Portal";
 import AdminDashboard from "./pages/AdminDashboard";
 import Navigation from "./components/Navigation";
 
-function ProtectedRoute({ children, requireAdmin = false }: { children: React.ReactNode, requireAdmin?: boolean }) {
-  const { isAuthenticated, user } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
-  
-  // If user is authenticated but hasn't completed registration, force them to registration
-  if (user?.isNewUser) {
-    return <Navigate to="/register" replace />;
-  }
+function Spinner() {
+  return (
+    <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+      <div className="w-10 h-10 border-4 border-[#2D5A27] border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
-  if (requireAdmin && user?.globalRole !== "Admin") {
-    return <Navigate to="/portal" replace />;
-  }
+function ProtectedRoute({ children, requireAdmin = false }: { children: React.ReactNode; requireAdmin?: boolean }) {
+  const { isAuthenticated, isLoading, isNewUser, user } = useAuth();
+
+  if (isLoading) return <Spinner />;
+  if (!isAuthenticated) return <Navigate to="/" replace />;
+  if (isNewUser) return <Navigate to="/register" replace />;
+  if (requireAdmin && user?.GlobalRole !== "Admin") return <Navigate to="/portal" replace />;
 
   return <Navigation>{children}</Navigation>;
 }
 
 function RegistrationRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, user } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
-  
-  // If user is already fully registered, send them to portal
-  if (!user?.isNewUser) {
-    return <Navigate to="/portal" replace />;
-  }
+  const { isAuthenticated, isLoading, isNewUser } = useAuth();
+
+  if (isLoading) return <Spinner />;
+  if (!isAuthenticated) return <Navigate to="/" replace />;
+  if (!isNewUser) return <Navigate to="/portal" replace />;
 
   return <>{children}</>;
 }
@@ -46,31 +41,30 @@ export default function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/registration" element={<Registration />} />
           <Route path="/" element={<Landing />} />
-          <Route 
-            path="/register" 
+          <Route
+            path="/register"
             element={
               <RegistrationRoute>
                 <Registration />
               </RegistrationRoute>
-            } 
+            }
           />
-          <Route 
-            path="/portal" 
+          <Route
+            path="/portal"
             element={
               <ProtectedRoute>
                 <Portal />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/admin" 
+          <Route
+            path="/admin"
             element={
               <ProtectedRoute requireAdmin={true}>
                 <AdminDashboard />
               </ProtectedRoute>
-            } 
+            }
           />
         </Routes>
       </Router>
