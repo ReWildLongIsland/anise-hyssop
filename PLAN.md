@@ -9,7 +9,7 @@
 | Phase | Status | Last updated |
 |-------|--------|--------------|
 | Phase 0 — Foundation & Scaffolding | **COMPLETE** | 2026-04-10 |
-| Phase 1 — Authentication Layer | IN PROGRESS | 2026-04-10 |
+| Phase 1 — Authentication Layer | **COMPLETE** | 2026-04-11 |
 | Phase 2 — Registration Flow | Not started | — |
 | Phase 3 — Volunteer Portal | Not started | — |
 | Phase 4 — Admin Dashboard | Not started | — |
@@ -72,33 +72,33 @@ git push
 
 ---
 
-## Phase 1 — Authentication Layer 🔧
+## Phase 1 — Authentication Layer ✅
 
 **Goal:** Real Auth0 login/register with email verification replaces all mocks.
 
-### What needs to happen
-- [x] Install `@auth0/auth0-react` in frontend
-- [x] Replace mock `AuthContext` with Auth0 `Auth0Provider` (SPA + PKCE)
-- [x] Update `main.tsx` to wrap app with `Auth0Provider`
-- [x] Rewrite `Landing.tsx` for Auth0 Universal Login redirect
-- [x] Backend `POST /api/auth/callback` — (if needed for token exchange)
-- [x] Backend `POST /api/auth/me` — check Volunteers sheet, return profile or `isNewUser`
-- [ ] "Resume Logic" — if user has Auth0 account but no Volunteers row, redirect to `/register`
-- [ ] Wire `Navigation.tsx` logout to Auth0 `logout()`
-- [ ] Test full flow: register via Auth0 → email verify → redirect back → detect as new user
+### What was built
+- [x] `@auth0/auth0-react` installed in frontend
+- [x] `Auth0Provider` in `main.tsx` with refresh tokens, `offline_access` scope, localStorage cache
+- [x] `AuthContext.tsx` rewritten as thin wrapper around `useAuth0` — fetches `/api/auth/me` on login
+- [x] `Landing.tsx` replaced email/password form with Auth0 Universal Login buttons (Register / Log In)
+- [x] `Navigation.tsx` logout wired to Auth0 `logout()` with `returnTo`
+- [x] `App.tsx` updated with `Spinner`, `ProtectedRoute`, `RegistrationRoute`, `GlobalRole` casing fix
+- [x] Backend `GET /api/auth/me` — checks Volunteers sheet by email, returns profile or `{isNewUser: true}`
+- [x] `verify_token` middleware confirmed working with Auth0-issued JWTs
+- [x] Debug logging added to JWT middleware (`auth.py`) for troubleshooting
+- [x] Resume logic working: Auth0 account with no Volunteers row → redirects to `/register`
+- [x] Full flow tested: Register → Auth0 Universal Login → redirect back → `/api/auth/me` → `/register`
 
-### What was done (from other computer, commit `228fc92`)
-- Directory structure flattened: removed `Anise Hyssop/` parent folder
-- `@auth0/auth0-react` added to frontend
-- `AuthContext.tsx` rewritten to use Auth0 SDK
-- `Landing.tsx` rewritten for Auth0 login redirect
-- `main.tsx` updated with `Auth0Provider`
-- Backend `auth.py` updated with real endpoints
+### Auth0 Dashboard setup (manual, not in code)
+- API registered: `https://volunteer.rewildlongisland.org/api` with "Allow Offline Access" enabled
+- SPA app: "Volunteer Management Portal" (`LzsgJTYej8xljSetqBXQoeiPDO1oE5T8`) authorized for the API
+- **Post Login Action** created: "Add email to access token" — injects `email` claim into access tokens
+- Database connection: signups enabled
 
-### Still TODO
-- Resume logic (new-user detection and redirect)
-- Verify end-to-end Auth0 flow against the dev tenant
-- Confirm `verify_token` middleware works with Auth0-issued JWTs
+### Runtime notes
+- Backend runs on port **8001** (port 8000 had a stale process issue on Bumblebee)
+- Vite proxy in `vite.config.ts` points to `http://localhost:8001`
+- If switching back to port 8000, update `vite.config.ts` accordingly
 
 ---
 
@@ -196,6 +196,7 @@ All significant decisions, deviations, or corrections — newest first.
 
 | Date | What | Why |
 |------|------|-----|
+| 2026-04-11 | Phase 1 complete | Auth0 flow working end-to-end; Auth0 Action needed for email claim; backend on port 8001 |
 | 2026-04-10 | Updated models for PRD v0.7.2 | Added `WaiverFileURL`, fixed Program roles, dropped Coordinator |
 | 2026-04-10 | Flattened directory structure | Removed `Anise Hyssop/` parent; paths are now `anise-hyssop-backend/` and `anise-hyssop-frontend/` at repo root |
 | 2026-04-10 | Phase 1 started on other computer | Auth0 SPA + PKCE integration; `@auth0/auth0-react` added; Landing + AuthContext rewritten |
