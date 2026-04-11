@@ -1,6 +1,13 @@
 Project: Anise Hyssop (Volunteer Portal)
 Tech Stack: FastAPI (Backend), React + Tailwind (Frontend), Google Sheets (Database).
 
+Local Paths (Windows):
+- Repo root:     C:\Users\raju\Desktop\Code\Anise Hyssop\
+- CLAUDE.md:     C:\Users\raju\Desktop\Code\Anise Hyssop\CLAUDE.md
+- PLAN.md:       C:\Users\raju\Desktop\Code\Anise Hyssop\PLAN.md
+- Backend code:  C:\Users\raju\Desktop\Code\Anise Hyssop\anise-hyssop-backend\
+- Frontend code: C:\Users\raju\Desktop\Code\Anise Hyssop\anise-hyssop-frontend\
+
 Key Files:
 - PLAN.md — Build plan, phase progress, and change log. READ THIS FIRST before doing any work.
 - PRD-v0.7.2.md — Current product requirements (authoritative spec).
