@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     MEMBERSHIPS_SHEET_ID: str
     TEAMS_SHEET_ID: str
 
+    # Google Drive — optional folder for Youth waiver uploads
+    DRIVE_WAIVER_FOLDER_ID: str = ""
+
     # App
     FRONTEND_URL: str = "http://localhost:5173"
 

@@ -50,7 +50,8 @@ class SheetsService:
 
     def _all_records(self, sheet_id: str) -> list[dict]:
         """Return all data rows as a list of dicts keyed by the header row."""
-        return self._worksheet(sheet_id).get_all_records()
+        records = self._worksheet(sheet_id).get_all_records()
+        return [{k.strip(): v for k, v in r.items()} for r in records]
 
     def _find_row(
         self, sheet_id: str, column: str, value: str
@@ -87,11 +88,14 @@ class SheetsService:
         """
         Returns all teams from the config sheet, with ZipCodes parsed into a list.
         This sheet is never written to by the application.
+        Uses numericise_ignore to prevent zip codes from being cast to integers.
         """
-        records = self._all_records(settings.TEAMS_SHEET_ID)
+        records = self._worksheet(settings.TEAMS_SHEET_ID).get_all_records(
+            numericise_ignore=["all"]
+        )
         teams = []
         for r in records:
-            raw_zips = r.get("ZipCodes", "")
+            raw_zips = str(r.get("ZipCodes", ""))
             zip_codes = (
                 [z.strip() for z in raw_zips.split(",") if z.strip()]
                 if raw_zips

@@ -18,6 +18,7 @@ interface AuthContextType {
   user: Volunteer | null;
   isNewUser: boolean;
   getAccessToken: () => Promise<string>;
+  refreshUser: () => Promise<void>;
   logout: () => void;
 }
 
@@ -35,39 +36,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isNewUser, setIsNewUser] = useState(false);
   const [meLoading, setMeLoading] = useState(false);
 
+  const fetchMe = async () => {
+    setMeLoading(true);
+    try {
+      const token = await getAccessTokenSilently();
+      const res = await fetch("/api/auth/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (data.isNewUser) {
+        setIsNewUser(true);
+        setUser(null);
+      } else {
+        setIsNewUser(false);
+        setUser(data.volunteer);
+      }
+    } catch (err) {
+      console.error("Failed to fetch /api/auth/me", err);
+    } finally {
+      setMeLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!isAuthenticated) {
       setUser(null);
       setIsNewUser(false);
       return;
     }
-
-    const fetchMe = async () => {
-      setMeLoading(true);
-      try {
-        const token = await getAccessTokenSilently();
-        const res = await fetch("/api/auth/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (data.isNewUser) {
-          setIsNewUser(true);
-          setUser(null);
-        } else {
-          setIsNewUser(false);
-          setUser(data.volunteer);
-        }
-      } catch (err) {
-        console.error("Failed to fetch /api/auth/me", err);
-      } finally {
-        setMeLoading(false);
-      }
-    };
-
     fetchMe();
   }, [isAuthenticated, getAccessTokenSilently]);
 
   const getAccessToken = () => getAccessTokenSilently();
+  const refreshUser = () => fetchMe();
 
   const logout = () =>
     auth0Logout({ logoutParams: { returnTo: window.location.origin } });
@@ -76,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isLoading, user, isNewUser, getAccessToken, logout }}
+      value={{ isAuthenticated, isLoading, user, isNewUser, getAccessToken, refreshUser, logout }}
     >
       {children}
     </AuthContext.Provider>

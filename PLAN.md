@@ -10,8 +10,8 @@
 |-------|--------|--------------|
 | Phase 0 — Foundation & Scaffolding | **COMPLETE** | 2026-04-10 |
 | Phase 1 — Authentication Layer | **COMPLETE** | 2026-04-11 |
-| Phase 2 — Registration Flow | Not started | — |
-| Phase 3 — Volunteer Portal | Not started | — |
+| Phase 2 — Registration Flow | **COMPLETE** | 2026-04-11 |
+| Phase 3 — Volunteer Portal | In progress | 2026-04-11 |
 | Phase 4 — Admin Dashboard | Not started | — |
 | Phase 5 — Business Logic & Compliance | Not started | — |
 | Phase 6 — Deployment & Hardening | Not started | — |
@@ -102,27 +102,30 @@ git push
 
 ---
 
-## Phase 2 — Registration Flow
+## Phase 2 — Registration Flow ✅
 
 **Goal:** The full 5-step flow writes to Google Sheets and activates the account.
 
-### Plan
-1. **Backend `GET /api/teams`** — already live from Phase 0
-2. **Step 2 (Identity)** — Frontend form: First Name, Last Name, Town, Zip Code, Adult/Youth self-ID. Youth: DOB + School + Grade. Remove password fields (Auth0 owns credentials). No backend write yet (localStorage with 4-hour expiry per PRD v0.7.2).
-3. **Step 3 (Team Selection)** — Zip-code pre-selection already implemented in frontend. Committee filter hides from Youth. Data held in localStorage.
-4. **Step 4 (Safety Rules)** — Pure frontend; checkbox agreement in localStorage.
-5. **Step 5 (Waiver & Commit)** — Adult: checkbox agreement. Youth: upload signed PDF.
-   - **New dependency:** Google Drive API for Youth waiver storage → add `google-api-python-client` to `requirements.txt`, create `app/services/drive_service.py`
-   - Backend `POST /api/registration/complete`:
-     - Writes Volunteer row (Status=Active, WaiverSignedDate=today)
-     - Writes Membership rows (one per selected team, default roles)
-     - If Youth: uploads waiver file to Drive, saves URL to `WaiverFileURL`
-     - Returns full user profile
+### What was built
+- [x] `POST /api/registration/complete` — validates form data, writes Volunteer + Membership rows to Sheets, uploads Youth waiver to Drive
+- [x] `app/services/drive_service.py` — Google Drive upload service using same service account, files shared by link
+- [x] `app/config.py` — added `DRIVE_WAIVER_FOLDER_ID` setting
+- [x] `requirements.txt` — added `google-api-python-client==2.114.0`
+- [x] `Registration.tsx` — removed password fields, added Auth0 Bearer token, localStorage persistence (4-hour expiry), submits multipart form to backend
+- [x] `AuthContext.tsx` — added `refreshUser()` method
+- [x] After successful registration, uses `window.location.href = "/portal"` (hard redirect) to avoid React state timing issues
+- [x] `scripts/reset_sheets.py` — resets all three sheets with clean headers (no trailing spaces); run this once per environment
+- [x] `scripts/populate_teams.py` — populates Teams Config sheet with all 17 teams
 
-### Key decisions (from PRD v0.7.2)
-- Abandonment is **client-side only** — localStorage expires after 4 hours. No backend cleanup job needed.
-- Adults do NOT provide DOB unless they want to (optional).
-- Youth MUST provide DOB, School, Grade.
+### Key decisions
+- Registration redirect uses `window.location.href` (full reload) instead of React Router `navigate()` — avoids async state timing bug where `isNewUser` wasn't updated before redirect
+- Google Sheets headers had trailing spaces from manual entry; fixed by stripping keys in `_all_records()` and providing `reset_sheets.py` for clean setup
+- Teams sheet uses `numericise_ignore=["all"]` to prevent zip codes from being parsed as integers
+- Abandonment is client-side only — localStorage expires after 4 hours. No backend cleanup needed.
+- Adults do NOT provide DOB (optional). Youth MUST provide DOB, School, Grade.
+
+### Known issue — Portal page stuck on "Loading"
+After registration redirects to `/portal`, the page shows a loading spinner. This is the next thing to fix in Phase 3 (Portal page needs to call `/api/user/profile` and render real data).
 
 ---
 
@@ -130,11 +133,15 @@ git push
 
 **Goal:** A volunteer can see their profile and team memberships.
 
-### Plan
-1. `GET /api/user/profile` — reads Volunteers sheet by email (from JWT), joins memberships with team names
-2. `DELETE /api/user/profile` — anonymise sheet row, delete Auth0 credentials via Management API
-3. Waiver re-sign gate — if `WaiverSignedDate` is expired (Jan 1 reset), show re-sign modal before portal access
-4. Wire existing `Portal.tsx` to real data
+### Next steps (pick up here)
+1. **First:** Fix loading spinner on `/portal` — `Portal.tsx` currently has no data-fetching; it needs to call `GET /api/user/profile`
+2. Build `GET /api/user/profile` backend endpoint — reads Volunteers sheet by email (from JWT), joins memberships with team names
+3. `DELETE /api/user/profile` — anonymise sheet row, delete Auth0 credentials via Management API
+4. Waiver re-sign gate — if `WaiverSignedDate` is expired (Jan 1 reset), show re-sign modal before portal access
+5. Wire existing `Portal.tsx` to real data
+
+---
+
 
 ---
 
@@ -196,6 +203,7 @@ All significant decisions, deviations, or corrections — newest first.
 
 | Date | What | Why |
 |------|------|-----|
+| 2026-04-11 | Phase 2 complete | Registration writes to Sheets; redirect uses window.location.href to avoid React timing bug; Sheets headers stripped of trailing spaces |
 | 2026-04-11 | Phase 1 complete | Auth0 flow working end-to-end; Auth0 Action needed for email claim; backend on port 8001 |
 | 2026-04-10 | Updated models for PRD v0.7.2 | Added `WaiverFileURL`, fixed Program roles, dropped Coordinator |
 | 2026-04-10 | Flattened directory structure | Removed `Anise Hyssop/` parent; paths are now `anise-hyssop-backend/` and `anise-hyssop-frontend/` at repo root |

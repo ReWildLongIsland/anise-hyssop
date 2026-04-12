@@ -30,12 +30,12 @@ export default function Landing() {
       </div>
 
       {/* Header */}
-      <header className="w-full p-6 flex justify-between items-center z-10">
+      <header className="w-full p-6 flex justify-center items-center z-10">
         <div className="flex items-center gap-2">
           <img
             src="/Branding/logo-banner.png"
             alt="ReWild Long Island"
-            className="h-12 md:h-20 lg:h-24 object-contain transition-all"
+            className="h-16 md:h-24 lg:h-32 object-contain transition-all"
             referrerPolicy="no-referrer"
             onError={(e) => {
               e.currentTarget.style.display = "none";
