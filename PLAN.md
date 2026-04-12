@@ -188,7 +188,7 @@ After registration redirects to `/portal`, the page shows a loading spinner. Thi
 
 ```
 Phase 0 (infra)  ✅
-  → Phase 1 (auth)  🔧
+  → Phase 1 (auth)  ✅
     → Phase 2 (registration) + Phase 3 (portal)  [can run in parallel]
       → Phase 4 (admin)
         → Phase 5 (business logic)
@@ -203,6 +203,7 @@ All significant decisions, deviations, or corrections — newest first.
 
 | Date | What | Why |
 |------|------|-----|
+| 2026-04-11 | Session commands created | `/start-sweatbee`, `/end-sweatbee`, `/start-bumblebee`, `/end-bumblebee` — automate session open/close on both machines. Commands live in `.claude/commands/` (not `.claude/skills/`). Bash `!` blocks don't work; commands use instruction-style prompts instead. |
 | 2026-04-11 | Phase 2 complete | Registration writes to Sheets; redirect uses window.location.href to avoid React timing bug; Sheets headers stripped of trailing spaces |
 | 2026-04-11 | Phase 1 complete | Auth0 flow working end-to-end; Auth0 Action needed for email claim; backend on port 8001 |
 | 2026-04-10 | Updated models for PRD v0.7.2 | Added `WaiverFileURL`, fixed Program roles, dropped Coordinator |
