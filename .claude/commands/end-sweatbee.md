@@ -1,21 +1,12 @@
 Wrap up the current work session by updating the plan, committing, and pushing.
 
-**What changed this session:**
-```!
-git -C "C:/Users/raju/Desktop/Code" diff --stat HEAD
-```
+First, run these commands to gather context:
 
-**Untracked/modified files:**
-```!
-git -C "C:/Users/raju/Desktop/Code" status --short
-```
+1. Run `git -C "C:/Users/raju/Desktop/Code" diff --stat HEAD` to see what changed this session
+2. Run `git -C "C:/Users/raju/Desktop/Code" status --short` to see untracked/modified files
+3. Read the file `C:/Users/raju/Desktop/Code/PLAN.md`
 
-**Current PLAN.md:**
-```!
-cat "C:/Users/raju/Desktop/Code/PLAN.md"
-```
-
-Do the following steps IN ORDER — do not skip any:
+Then do the following steps IN ORDER — do not skip any:
 
 1. **Review the diff** to understand everything that was built or changed this session.
 
