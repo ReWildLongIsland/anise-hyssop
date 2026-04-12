@@ -20,5 +20,6 @@
 .DS_Store
 Thumbs.db
 
-# Claude Code internal state (memory, session files, local permissions)
-.claude/
+# Claude Code — ignore local settings but commit shared skills/commands
+.claude/settings.local.json
+.claude/projects/
