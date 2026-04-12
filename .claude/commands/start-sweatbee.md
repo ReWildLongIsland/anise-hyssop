@@ -2,17 +2,17 @@ Pull the latest code from GitHub and orient for the session.
 
 **Git pull:**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code")" && git pull
+git -C "C:/Users/raju/Desktop/Code" pull
 ```
 
 **Local changes (if any):**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code")" && git status --short
+git -C "C:/Users/raju/Desktop/Code" status --short
 ```
 
 **Recent commits:**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code")" && git log --oneline -5
+git -C "C:/Users/raju/Desktop/Code" log --oneline -5
 ```
 
 **PLAN.md:**

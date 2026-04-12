@@ -2,7 +2,12 @@ Wrap up the current work session on Bumblebee by updating the plan, committing, 
 
 **What changed this session:**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code/Anise Hyssop")" && git diff --stat HEAD && echo "---UNTRACKED---" && git status --short
+git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" diff --stat HEAD
+```
+
+**Untracked/modified files:**
+```!
+git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" status --short
 ```
 
 **Current PLAN.md:**

@@ -2,7 +2,12 @@ Wrap up the current work session by updating the plan, committing, and pushing.
 
 **What changed this session:**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code")" && git diff --stat HEAD && echo "---UNTRACKED---" && git status --short
+git -C "C:/Users/raju/Desktop/Code" diff --stat HEAD
+```
+
+**Untracked/modified files:**
+```!
+git -C "C:/Users/raju/Desktop/Code" status --short
 ```
 
 **Current PLAN.md:**

@@ -2,17 +2,17 @@ Pull the latest code from GitHub and orient for the session on Bumblebee.
 
 **Git pull:**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code/Anise Hyssop")" && git pull
+git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" pull
 ```
 
 **Local changes (if any):**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code/Anise Hyssop")" && git status --short
+git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" status --short
 ```
 
 **Recent commits:**
 ```!
-cd "$(git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" rev-parse --show-toplevel 2>/dev/null || echo "C:/Users/raju/Desktop/Code/Anise Hyssop")" && git log --oneline -5
+git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" log --oneline -5
 ```
 
 **PLAN.md:**
