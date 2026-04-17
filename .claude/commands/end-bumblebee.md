@@ -1,30 +1,29 @@
-Wrap up the current work session on Bumblebee by updating the plan, committing, and pushing.
+Wrap up the current work session on Bumblebee by committing and pushing both projects.
 
-First, run these commands to gather context:
+First, gather context:
 
-1. Run `git -C "C:/Users/raju/Desktop/Code" diff --stat HEAD` to see what changed this session
-2. Run `git -C "C:/Users/raju/Desktop/Code" status --short` to see untracked/modified files
-3. Read the file `C:/Users/raju/Desktop/Code/PLAN.md`
+1. `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" status --short`
+2. `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" diff --stat HEAD`
+3. `git -C "C:/Users/raju/Desktop/Code/Plant Sale" status --short`
+4. `git -C "C:/Users/raju/Desktop/Code/Plant Sale" diff --stat HEAD`
+5. Read `C:/Users/raju/Desktop/Code/Anise Hyssop/PLAN.md`
+6. Read `C:/Users/raju/.claude/plans/spicy-sparking-cat.md`
 
-Then do the following steps IN ORDER — do not skip any:
+Then do the following IN ORDER:
 
-1. **Review the diff** to understand everything that was built or changed this session.
+### Anise Hyssop
+1. **Update PLAN.md** — check off completed items, update Quick Status table, add a Change Log row (newest first)
+2. `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" add .`
+3. Commit: `Phase X: short description` + `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+4. `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" push`
 
-2. **Update PLAN.md** with accurate current state:
-   - In the Quick Status table: update the Status and date for any phase that progressed or completed
-   - In the active phase section: check off completed items, update "Next steps" to show where the next session should pick up
-   - In the Change Log: add a row (newest first) for any significant decisions, completions, or deviations from the plan
-   - Do NOT remove or rewrite history — only add and update
+### Plant Sale
+1. `git -C "C:/Users/raju/Desktop/Code/Plant Sale" add .`
+2. Commit with a clear message describing what changed in the script + `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+3. `git -C "C:/Users/raju/Desktop/Code/Plant Sale" push`
 
-3. **Stage everything:** `git add .`
-
-4. **Commit** with a clear message summarising what was built:
-   - Format: `Phase X: short description of what was done`
-   - Include `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
-
-5. **Push:** `git push`
-
-6. **Confirm** by running `git log --oneline -3` and `git status`, then tell me:
-   - What was committed
-   - That Sweatbee can `git pull` to continue
-   - What the next session should start with
+### Confirm
+Run `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" log --oneline -2` and `git -C "C:/Users/raju/Desktop/Code/Plant Sale" log --oneline -2`, then tell me:
+- What was committed in each repo
+- That the other machine can `git pull` to continue
+- What the next session should start with for each project

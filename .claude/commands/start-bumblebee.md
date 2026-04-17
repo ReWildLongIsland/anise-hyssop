@@ -1,18 +1,20 @@
-Pull the latest code from GitHub and orient for the session on Bumblebee.
+Pull the latest code from GitHub for both projects and orient for the session on Bumblebee.
 
-First, run these commands to gather context:
+Run these commands to sync and gather context:
 
-1. Run `git -C "C:/Users/raju/Desktop/Code" pull`
-2. Run `git -C "C:/Users/raju/Desktop/Code" status --short` to check for local changes
-3. Run `git -C "C:/Users/raju/Desktop/Code" log --oneline -5` to see recent commits
-4. Read the file `C:/Users/raju/Desktop/Code/PLAN.md`
+1. `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" pull`
+2. `git -C "C:/Users/raju/Desktop/Code/Plant Sale" pull`
+3. `git -C "C:/Users/raju/Desktop/Code/Anise Hyssop" log --oneline -3`
+4. `git -C "C:/Users/raju/Desktop/Code/Plant Sale" log --oneline -3`
+5. Read `C:/Users/raju/Desktop/Code/Anise Hyssop/PLAN.md`
+6. Read `C:/Users/raju/.claude/plans/spicy-sparking-cat.md` (Plant Sale plan)
 
-Based on all of the above:
-1. Summarise what was pulled (new commits, key file changes) — or confirm already up to date
-2. State the current active phase and its status from the Quick Status table
-3. List the exact next steps from PLAN.md for the current phase
-4. Flag any uncommitted local changes that need attention before starting
-5. Confirm the session is ready and tell me what to work on first
+Then report:
+1. What was pulled for each project (new commits, or "already up to date")
+2. **Anise Hyssop:** current active phase and exact next steps from PLAN.md
+3. **Plant Sale:** current step from the plan file and what was last worked on
+4. Any uncommitted local changes in either repo that need attention
+5. Confirm ready — state which project and task to start with
 
-> **Bumblebee runtime note:** Backend runs on port **8001**. Start with:
+> **Bumblebee runtime note:** Anise Hyssop backend runs on port **8001**:
 > `uvicorn app.main:app --reload --port 8001`
