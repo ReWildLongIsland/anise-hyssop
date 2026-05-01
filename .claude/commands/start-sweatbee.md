@@ -2,13 +2,13 @@ Pull the latest code from GitHub and orient for the session.
 
 First, run these commands to gather context:
 
-1. Run `git -C "C:/Users/raju/OneDrive/Desktop/Code/Anise Hyssop" pull`
-2. Run `git -C "C:/Users/raju/OneDrive/Desktop/Code/plant-sale" pull`
-3. Run `git -C "C:/Users/raju/OneDrive/Desktop/Code/Anise Hyssop" status --short` to check for local changes
-4. Run `git -C "C:/Users/raju/OneDrive/Desktop/Code/plant-sale" status --short` to check for local changes
-5. Run `git -C "C:/Users/raju/OneDrive/Desktop/Code/Anise Hyssop" log --oneline -3` to see recent commits
-6. Run `git -C "C:/Users/raju/OneDrive/Desktop/Code/plant-sale" log --oneline -3` to see recent commits
-7. Read the file `C:/Users/raju/OneDrive/Desktop/Code/Anise Hyssop/PLAN.md`
+1. Run `git -C "C:/Users/raju/Code/Anise Hyssop" pull`
+2. Run `git -C "C:/Users/raju/Code/plant-sale" pull`
+3. Run `git -C "C:/Users/raju/Code/Anise Hyssop" status --short` to check for local changes
+4. Run `git -C "C:/Users/raju/Code/plant-sale" status --short` to check for local changes
+5. Run `git -C "C:/Users/raju/Code/Anise Hyssop" log --oneline -3` to see recent commits
+6. Run `git -C "C:/Users/raju/Code/plant-sale" log --oneline -3` to see recent commits
+7. Read the file `C:/Users/raju/Code/Anise Hyssop/PLAN.md`
 
 Based on all of the above:
 1. For each repo, summarise what was pulled (new commits, key changes) — or confirm already up to date
