@@ -3,11 +3,11 @@ Pull the latest code from GitHub and orient for the session.
 First, run these commands to gather context:
 
 1. Run `git -C "C:/Users/raju/Code/Anise Hyssop" pull`
-2. Run `git -C "C:/Users/raju/Code/plant-sale" pull`
+2. Run `git -C "C:/Users/raju/Code/Plant Sale" pull`
 3. Run `git -C "C:/Users/raju/Code/Anise Hyssop" status --short` to check for local changes
-4. Run `git -C "C:/Users/raju/Code/plant-sale" status --short` to check for local changes
+4. Run `git -C "C:/Users/raju/Code/Plant Sale" status --short` to check for local changes
 5. Run `git -C "C:/Users/raju/Code/Anise Hyssop" log --oneline -3` to see recent commits
-6. Run `git -C "C:/Users/raju/Code/plant-sale" log --oneline -3` to see recent commits
+6. Run `git -C "C:/Users/raju/Code/Plant Sale" log --oneline -3` to see recent commits
 7. Read the file `C:/Users/raju/Code/Anise Hyssop/PLAN.md`
 
 Based on all of the above:

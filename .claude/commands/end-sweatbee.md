@@ -4,8 +4,8 @@ First, run these commands to gather context:
 
 1. Run `git -C "C:/Users/raju/Code/Anise Hyssop" diff --stat HEAD` to see what changed this session
 2. Run `git -C "C:/Users/raju/Code/Anise Hyssop" status --short` to see untracked/modified files
-3. Run `git -C "C:/Users/raju/Code/plant-sale" diff --stat HEAD` to see what changed in plant-sale
-4. Run `git -C "C:/Users/raju/Code/plant-sale" status --short` to see untracked/modified files in plant-sale
+3. Run `git -C "C:/Users/raju/Code/Plant Sale" diff --stat HEAD` to see what changed in plant-sale
+4. Run `git -C "C:/Users/raju/Code/Plant Sale" status --short` to see untracked/modified files in plant-sale
 5. Read the file `C:/Users/raju/Code/Anise Hyssop/PLAN.md`
 
 Then do the following steps IN ORDER — do not skip any:
@@ -26,7 +26,7 @@ Then do the following steps IN ORDER — do not skip any:
 
 5. **Push anise-hyssop:** `git -C "C:/Users/raju/Code/Anise Hyssop" push`
 
-6. **If plant-sale has changes:** stage, commit (same format), and push from `C:/Users/raju/Code/plant-sale`
+6. **If plant-sale has changes:** stage, commit (same format), and push from `C:/Users/raju/Code/Plant Sale`
 
 7. **Confirm** by running `git log --oneline -3` and `git status` on both repos, then tell me:
    - What was committed
